@@ -1,311 +1,355 @@
-import React, { useState } from 'react';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pardee School 10-Year Anniversary Trivia</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .fade-in {
+            animation: fadeIn 0.5s;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .quiz-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body class="bg-blue-50 min-h-screen">
+    <div class="quiz-container">
+        <div class="text-center mb-6">
+            <h1 class="text-3xl font-bold text-blue-800">From Foundation to Future</h1>
+            <p class="text-lg text-blue-600">Celebrating a Decade of Global Impact: The Pardee School's 10th Anniversary Gala</p>
+        </div>
 
-const PardeeTrivia = () => {
-  // Game states
-  const [screen, setScreen] = useState('start');
-  const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [score, setScore] = useState(0);
-  const [selectedAnswer, setSelectedAnswer] = useState(null);
-  const [showHint, setShowHint] = useState(false);
-  
-  // Questions list
-  const questions = [
-    {
-      question: "In what year was the Frederick S. Pardee School of Global Studies officially established?",
-      options: ["2011", "2013", "2014", "2018"],
-      answer: 2,
-      hint: "Although the origins of the Pardee School go back four decades in the College of Arts & Sciences international relations department, the school was founded after a $25 million gift from Frederick S. Pardee in 2013."
-    },
-    {
-      question: "Which center, established in 1952, was the first to become part of what would later evolve into the Pardee School?",
-      options: ["Center for International Relations", "African Studies Center", "Center for the Study of Asia", "Latin American Studies Program"],
-      answer: 1,
-      hint: "The African Studies Center was established more than 60 years before the official founding of the Pardee School, making it the oldest international studies center at Boston University."
-    },
-    {
-      question: "Which Pardee School professor was portrayed by Nicole Kidman in the 1997 film 'The Peacemaker'?",
-      options: ["Jessica Stern", "Vivien Schmidt", "Susan Eckstein", "Rachel Brulé"],
-      answer: 0,
-      hint: "Jessica Stern's role at the National Security Council during the Clinton administration, where she directed Russian, Ukrainian, and Eurasian affairs and led a nuclear weapons smuggling response unit, was dramatized in 'The Peacemaker.'"
-    },
-    {
-      question: "Which Pardee alumna became the youngest woman ever elected to the United States Congress in 2018?",
-      options: ["Shoshana Chatfield", "Daniella Kolodny", "Alexandria Ocasio-Cortez", "Susan Rice"],
-      answer: 2,
-      hint: "Alexandria Ocasio-Cortez (Pardee '11) won New York's 14th Congressional District and gave an address on the first night of the 2024 Democratic National Convention in Chicago."
-    },
-    {
-      question: "What significant partnership with the US State Department did the Pardee School establish to support Afghan women's economic resilience?",
-      options: ["Afghan Educational Exchange Program", "Alliance for Afghan Women's Economic Resilience (AWER)", "Women's Global Development Initiative", "Central Asian Democracy Project"],
-      answer: 1,
-      hint: "In February 2024, at the AWER summit in Washington D.C., Secretary of State Antony Blinken praised the partnership with BU as 'a ray of light in some of the darkness.'"
-    },
-    {
-      question: "In 2023, Pardee School Dean Emeritus Adil Najam was named president of which global organization?",
-      options: ["World Bank", "World Wildlife Fund (WWF) International", "United Nations Environment Programme", "Organisation for Economic Co-operation and Development"],
-      answer: 1,
-      hint: "The World Wildlife Fund for Nature has nearly six million members and is working on conservation projects in nearly 100 countries, with an annual budget of almost $1 billion."
-    },
-    {
-      question: "What unique architectural feature will make the new Pardee School building unique in Massachusetts when completed?",
-      options: [
-        "It will be the tallest timber building in the state",
-        "It will have the largest solar array on any university building",
-        "It will feature a rooftop diplomatic conference center",
-        "It will include an underground research facility"
-      ],
-      answer: 0,
-      hint: "The 12-story mass timber structure will be the tallest timber building in Massachusetts, making it a significant addition to BU's Charles River Campus and a symbol of sustainability."
-    },
-    {
-      question: "In 2025, the Pardee School launched what new publication?",
-      options: [
-        "A satellite campus in Geneva",
-        "The inaugural Pardee Magazine",
-        "A doctoral program in Global Studies",
-        "An annual global policy conference"
-      ],
-      answer: 1,
-      hint: "The inaugural issue of Pardee Magazine featured articles on the next generation of global leaders, notable alumni, faculty perspectives on global challenges for the new US administration, and coverage of the summit for Afghan women in Washington."
-    },
-    {
-      question: "In 2024, the Pardee School established a partnership with which prestigious Pakistani university?",
-      options: [
-        "Lahore University of Management Sciences",
-        "Quaid-i-Azam University",
-        "Beaconhouse National University",
-        "National University of Sciences and Technology"
-      ],
-      answer: 2,
-      hint: "This partnership with BNU in Lahore was especially meaningful as the university's President/Vice Chancellor, Moeed W. Yusuf, is a Pardee School alumnus who called the collaboration 'a remarkable opportunity' for students, faculty, and researchers to engage globally."
-    },
-    {
-      question: "In 2025, the Pardee School formalized a partnership with which organization founded by former Dominican Republic President Leonel Fernández?",
-      options: [
-        "Centro de Estudios Caribeños",
-        "Instituto Dominicano de Política Exterior",
-        "Global Foundation for Democracy and Development (FUNGLODE)",
-        "Caribbean Research Institute"
-      ],
-      answer: 2,
-      hint: "For FUNGLODE, this agreement represents 'a landmark step in our commitment to academic excellence, research, and the development of global thought' that will strengthen knowledge exchange and create collaborative opportunities for the Dominican Republic and the region."
-    }
-  ];
-  
-  // Game functions
-  const startGame = () => {
-    setScreen('question');
-    setCurrentQuestion(0);
-    setScore(0);
-  };
-  
-  const handleSelectAnswer = (index) => {
-    setSelectedAnswer(index);
-    
-    if (index === questions[currentQuestion].answer) {
-      setScore(score + 1);
-    }
-  };
-  
-  const nextQuestion = () => {
-    if (currentQuestion < questions.length - 1) {
-      setCurrentQuestion(currentQuestion + 1);
-      setSelectedAnswer(null);
-      setShowHint(false);
-    } else {
-      setScreen('results');
-    }
-  };
-  
-  const restartGame = () => {
-    setScreen('start');
-    setCurrentQuestion(0);
-    setScore(0);
-    setSelectedAnswer(null);
-    setShowHint(false);
-  };
-  
-  // Render functions for different screens
-  const renderStartScreen = () => (
-    <div className="bg-white p-8 rounded-lg shadow-md max-w-lg mx-auto text-center">
-      <h1 className="text-3xl font-bold text-blue-600 mb-4">Pardee School Trivia</h1>
-      <h2 className="text-xl text-blue-500 mb-4">Celebrating 10 Years of Global Excellence</h2>
-      
-      <p className="mb-6">Test your knowledge about the Frederick S. Pardee School of Global Studies with questions covering the school's impressive history, achievements, notable alumni, and exciting future vision!</p>
-      
-      <div className="bg-blue-50 p-4 rounded-md mb-6 text-left">
-        <p className="font-medium text-blue-700 mb-1">Did you know?</p>
-        <p className="text-sm">The Pardee School has over 11,000 alumni working in more than 100 countries, making a global impact in diplomacy, government, business, education, and nonprofits.</p>
-      </div>
-      
-      <button 
-        onClick={startGame}
-        className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors"
-      >
-        Start Quiz
-      </button>
-    </div>
-  );
-  
-  const renderQuestionScreen = () => {
-    const currentQ = questions[currentQuestion];
-    
-    return (
-      <div className="bg-white p-6 rounded-lg shadow-md max-w-2xl mx-auto">
-        <div className="flex justify-between items-center mb-4">
-          <div>
-            <span className="text-sm text-gray-500">Question {currentQuestion + 1} of {questions.length}</span>
-          </div>
-          <div className="bg-blue-100 px-3 py-1 rounded-full text-blue-800 font-medium">
-            Score: {score}
-          </div>
-        </div>
-        
-        <h2 className="text-xl font-semibold mb-4">{currentQ.question}</h2>
-        
-        <div className="space-y-2 mb-6">
-          {currentQ.options.map((option, index) => (
-            <button
-              key={index}
-              onClick={() => selectedAnswer === null && handleSelectAnswer(index)}
-              className={`w-full text-left p-3 rounded-lg border ${
-                selectedAnswer === null 
-                  ? 'hover:bg-blue-50 border-gray-200' 
-                  : selectedAnswer === index
-                    ? index === currentQ.answer
-                      ? 'bg-green-100 border-green-500'
-                      : 'bg-red-100 border-red-500'
-                    : index === currentQ.answer
-                      ? 'bg-green-100 border-green-500'
-                      : 'opacity-70 border-gray-200'
-              }`}
-            >
-              {option}
+        <!-- Start Screen -->
+        <div id="start-screen" class="bg-white p-8 rounded-lg shadow-md text-center fade-in">
+            <h1 class="text-3xl font-bold text-blue-600 mb-4">Pardee School Trivia</h1>
+            <h2 class="text-xl text-blue-500 mb-4">Celebrating 10 Years of Global Excellence</h2>
+            
+            <p class="mb-6">Test your knowledge about the Frederick S. Pardee School of Global Studies with questions covering the school's impressive history, achievements, notable alumni, and exciting future vision!</p>
+            
+            <div class="bg-blue-50 p-4 rounded-md mb-6 text-left">
+                <p class="font-medium text-blue-700 mb-1">Did you know?</p>
+                <p class="text-sm">The Pardee School has over 11,000 alumni working in more than 100 countries, making a global impact in diplomacy, government, business, education, and nonprofits.</p>
+            </div>
+            
+            <button id="start-button" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                Start Quiz
             </button>
-          ))}
         </div>
-        
-        {selectedAnswer === null && !showHint && (
-          <button 
-            onClick={() => setShowHint(true)}
-            className="text-blue-600 text-sm mb-4"
-          >
-            Need a hint?
-          </button>
-        )}
-        
-        {showHint && selectedAnswer === null && (
-          <div className="bg-yellow-50 p-3 rounded-md mb-4 text-sm">
-            <p><span className="font-medium">Hint:</span> {currentQ.hint}</p>
-          </div>
-        )}
-        
-        {selectedAnswer !== null && (
-          <div>
-            <div className="mb-4">
-              <p className="text-sm font-medium text-gray-800 mb-1">
-                {selectedAnswer === currentQ.answer 
-                  ? "Correct!" 
-                  : "Incorrect - the correct answer is: " + currentQ.options[currentQ.answer]}
-              </p>
-              <div className="bg-blue-50 p-3 rounded-md text-sm">
-                <p><span className="font-medium">Fun Fact:</span> {currentQ.hint}</p>
-              </div>
+
+        <!-- Question Screen -->
+        <div id="question-screen" class="bg-white p-6 rounded-lg shadow-md fade-in hidden">
+            <div class="flex justify-between items-center mb-4">
+                <div>
+                    <span id="question-counter" class="text-sm text-gray-500">Question 1 of 10</span>
+                </div>
+                <div class="bg-blue-100 px-3 py-1 rounded-full text-blue-800 font-medium">
+                    Score: <span id="score-display">0</span>
+                </div>
             </div>
-            <div className="flex justify-end">
-              <button
-                onClick={nextQuestion}
-                className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
-              >
-                {currentQuestion < questions.length - 1 ? "Next Question" : "See Results"}
-              </button>
+            
+            <h2 id="question-text" class="text-xl font-semibold mb-4"></h2>
+            
+            <div id="options-container" class="space-y-2 mb-6">
+                <!-- Options will be inserted here -->
             </div>
-          </div>
-        )}
-      </div>
-    );
-  };
-  
-  const renderResultsScreen = () => {
-    const percentage = Math.round((score / questions.length) * 100);
-    let message;
-    
-    if (percentage >= 90) {
-      message = "Outstanding! You're a true Pardee School expert!";
-    } else if (percentage >= 75) {
-      message = "Excellent! You know the Pardee School very well.";
-    } else if (percentage >= 60) {
-      message = "Good job! You have solid knowledge of the Pardee School.";
-    } else if (percentage >= 40) {
-      message = "Not bad! You've learned some Pardee School facts.";
-    } else {
-      message = "Thanks for playing! There's always more to learn about Pardee School.";
-    }
-    
-    return (
-      <div className="bg-white p-8 rounded-lg shadow-md max-w-lg mx-auto text-center">
-        <h2 className="text-2xl font-bold text-blue-600 mb-2">Quiz Complete!</h2>
-        
-        <div className="w-32 h-32 mx-auto my-6 flex items-center justify-center rounded-full border-8 border-blue-100">
-          <div>
-            <p className="text-3xl font-bold text-blue-600">{score}</p>
-            <p className="text-sm text-gray-500">of {questions.length}</p>
-          </div>
-        </div>
-        
-        <p className="text-xl mb-2 font-medium">{message}</p>
-        <p className="mb-4">Your score: {percentage}%</p>
-        
-        <div className="bg-blue-50 p-4 rounded-md mb-6 text-left">
-          <p className="font-medium text-blue-700 mb-1">From Foundation to Future</p>
-          <p className="text-sm">As we celebrate the 10th anniversary of the Pardee School's founding, we invite you to join us for a day of celebration with panel discussions and an evening gala commemorating 10 years of pioneering achievements in global studies.</p>
-        </div>
-        
-        <p className="text-sm text-gray-600 mb-6">
-          The Frederick S. Pardee School of Global Studies continues to grow and make an impact globally.
-          Here's to the next decade of excellence!
-        </p>
-        
-        <button
-          onClick={restartGame}
-          className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700"
-        >
-          Play Again
-        </button>
-      </div>
-    );
-  };
-  
-  // Main render
-  return (
-    <div className="min-h-screen bg-blue-50 p-4 flex flex-col items-center justify-center">
-      <div className="w-full max-w-4xl">
-        <div className="text-center mb-6">
-          <h1 className="text-3xl font-bold text-blue-800">From Foundation to Future</h1>
-          <p className="text-lg text-blue-600">Celebrating a Decade of Global Impact: The Pardee School's 10th Anniversary Gala</p>
-        </div>
-      
-        {screen !== 'start' && (
-          <div className="mb-4 flex justify-between items-center">
-            <button
-              onClick={restartGame}
-              className="text-blue-600 hover:text-blue-800"
-            >
-              Restart Quiz
+            
+            <button id="hint-button" class="text-blue-600 text-sm mb-4">
+                Need a hint?
             </button>
             
-            <div className="text-sm text-gray-500">
-              Pardee School 10th Anniversary Trivia
+            <div id="hint-box" class="bg-yellow-50 p-3 rounded-md mb-4 text-sm hidden">
+                <p><span class="font-medium">Hint:</span> <span id="hint-text"></span></p>
             </div>
-          </div>
-        )}
-        
-        {screen === 'start' && renderStartScreen()}
-        {screen === 'question' && renderQuestionScreen()}
-        {screen === 'results' && renderResultsScreen()}
-      </div>
-    </div>
-  );
-};
+            
+            <div id="answer-feedback" class="hidden">
+                <div class="mb-4">
+                    <p id="correct-text" class="text-sm font-medium text-gray-800 mb-1"></p>
+                    <div class="bg-blue-50 p-3 rounded-md text-sm">
+                        <p><span class="font-medium">Fun Fact:</span> <span id="fact-text"></span></p>
+                    </div>
+                </div>
+                <div class="flex justify-end">
+                    <button id="next-button" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+                        Next Question
+                    </button>
+                </div>
+            </div>
+        </div>
 
-export default PardeeTrivia;
+        <!-- Results Screen -->
+        <div id="results-screen" class="bg-white p-8 rounded-lg shadow-md text-center fade-in hidden">
+            <h2 class="text-2xl font-bold text-blue-600 mb-2">Quiz Complete!</h2>
+            
+            <div class="w-32 h-32 mx-auto my-6 flex items-center justify-center rounded-full border-8 border-blue-100">
+                <div>
+                    <p id="final-score" class="text-3xl font-bold text-blue-600">0</p>
+                    <p class="text-sm text-gray-500">of 10</p>
+                </div>
+            </div>
+            
+            <p id="score-message" class="text-xl mb-2 font-medium"></p>
+            <p id="percentage" class="mb-4">Your score: 0%</p>
+            
+            <div class="bg-blue-50 p-4 rounded-md mb-6 text-left">
+                <p class="font-medium text-blue-700 mb-1">From Foundation to Future</p>
+                <p class="text-sm">As we celebrate the 10th anniversary of the Pardee School's founding, we invite you to join us for a day of celebration with panel discussions and an evening gala commemorating 10 years of pioneering achievements in global studies.</p>
+            </div>
+            
+            <p class="text-sm text-gray-600 mb-6">
+                The Frederick S. Pardee School of Global Studies continues to grow and make an impact globally.
+                Here's to the next decade of excellence!
+            </p>
+            
+            <button id="restart-button" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700">
+                Play Again
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                question: "In what year was the Frederick S. Pardee School of Global Studies officially established?",
+                options: ["2011", "2013", "2014", "2018"],
+                answer: 2,
+                hint: "Although the origins of the Pardee School go back four decades in the College of Arts & Sciences international relations department, the school was founded after a $25 million gift from Frederick S. Pardee in 2013."
+            },
+            {
+                question: "Which center, established in 1952, was the first to become part of what would later evolve into the Pardee School?",
+                options: ["Center for International Relations", "African Studies Center", "Center for the Study of Asia", "Latin American Studies Program"],
+                answer: 1,
+                hint: "The African Studies Center was established more than 60 years before the official founding of the Pardee School, making it the oldest international studies center at Boston University."
+            },
+            {
+                question: "Which Pardee School professor was portrayed by Nicole Kidman in the 1997 film 'The Peacemaker'?",
+                options: ["Jessica Stern", "Vivien Schmidt", "Susan Eckstein", "Rachel Brulé"],
+                answer: 0,
+                hint: "Jessica Stern's role at the National Security Council during the Clinton administration, where she directed Russian, Ukrainian, and Eurasian affairs and led a nuclear weapons smuggling response unit, was dramatized in 'The Peacemaker.'"
+            },
+            {
+                question: "Which Pardee alumna became the youngest woman ever elected to the United States Congress in 2018?",
+                options: ["Shoshana Chatfield", "Daniella Kolodny", "Alexandria Ocasio-Cortez", "Susan Rice"],
+                answer: 2,
+                hint: "Alexandria Ocasio-Cortez (Pardee '11) won New York's 14th Congressional District and gave an address on the first night of the 2024 Democratic National Convention in Chicago."
+            },
+            {
+                question: "What significant partnership with the US State Department did the Pardee School establish to support Afghan women's economic resilience?",
+                options: ["Afghan Educational Exchange Program", "Alliance for Afghan Women's Economic Resilience (AWER)", "Women's Global Development Initiative", "Central Asian Democracy Project"],
+                answer: 1,
+                hint: "In February 2024, at the AWER summit in Washington D.C., Secretary of State Antony Blinken praised the partnership with BU as 'a ray of light in some of the darkness.'"
+            },
+            {
+                question: "In 2023, Pardee School Dean Emeritus Adil Najam was named president of which global organization?",
+                options: ["World Bank", "World Wildlife Fund (WWF) International", "United Nations Environment Programme", "Organisation for Economic Co-operation and Development"],
+                answer: 1,
+                hint: "The World Wildlife Fund for Nature has nearly six million members and is working on conservation projects in nearly 100 countries, with an annual budget of almost $1 billion."
+            },
+            {
+                question: "What unique architectural feature will make the new Pardee School building unique in Massachusetts when completed?",
+                options: [
+                    "It will be the tallest timber building in the state",
+                    "It will have the largest solar array on any university building",
+                    "It will feature a rooftop diplomatic conference center",
+                    "It will include an underground research facility"
+                ],
+                answer: 0,
+                hint: "The 12-story mass timber structure will be the tallest timber building in Massachusetts, making it a significant addition to BU's Charles River Campus and a symbol of sustainability."
+            },
+            {
+                question: "In 2025, the Pardee School launched what new publication?",
+                options: [
+                    "A satellite campus in Geneva",
+                    "The inaugural Pardee Magazine",
+                    "A doctoral program in Global Studies",
+                    "An annual global policy conference"
+                ],
+                answer: 1,
+                hint: "The inaugural issue of Pardee Magazine featured articles on the next generation of global leaders, notable alumni, faculty perspectives on global challenges for the new US administration, and coverage of the summit for Afghan women in Washington."
+            },
+            {
+                question: "In 2024, the Pardee School established a partnership with which prestigious Pakistani university?",
+                options: [
+                    "Lahore University of Management Sciences",
+                    "Quaid-i-Azam University",
+                    "Beaconhouse National University",
+                    "National University of Sciences and Technology"
+                ],
+                answer: 2,
+                hint: "This partnership with BNU in Lahore was especially meaningful as the university's President/Vice Chancellor, Moeed W. Yusuf, is a Pardee School alumnus who called the collaboration 'a remarkable opportunity' for students, faculty, and researchers to engage globally."
+            },
+            {
+                question: "In 2025, the Pardee School formalized a partnership with which organization founded by former Dominican Republic President Leonel Fernández?",
+                options: [
+                    "Centro de Estudios Caribeños",
+                    "Instituto Dominicano de Política Exterior",
+                    "Global Foundation for Democracy and Development (FUNGLODE)",
+                    "Caribbean Research Institute"
+                ],
+                answer: 2,
+                hint: "For FUNGLODE, this agreement represents 'a landmark step in our commitment to academic excellence, research, and the development of global thought' that will strengthen knowledge exchange and create collaborative opportunities for the Dominican Republic and the region."
+            }
+        ];
+
+        // Game state
+        let currentQuestion = 0;
+        let score = 0;
+        let answerSelected = false;
+
+        // DOM elements
+        const startScreen = document.getElementById('start-screen');
+        const questionScreen = document.getElementById('question-screen');
+        const resultsScreen = document.getElementById('results-screen');
+        const startButton = document.getElementById('start-button');
+        const questionCounter = document.getElementById('question-counter');
+        const scoreDisplay = document.getElementById('score-display');
+        const questionText = document.getElementById('question-text');
+        const optionsContainer = document.getElementById('options-container');
+        const hintButton = document.getElementById('hint-button');
+        const hintBox = document.getElementById('hint-box');
+        const hintText = document.getElementById('hint-text');
+        const answerFeedback = document.getElementById('answer-feedback');
+        const correctText = document.getElementById('correct-text');
+        const factText = document.getElementById('fact-text');
+        const nextButton = document.getElementById('next-button');
+        const finalScore = document.getElementById('final-score');
+        const scoreMessage = document.getElementById('score-message');
+        const percentageDisplay = document.getElementById('percentage');
+        const restartButton = document.getElementById('restart-button');
+
+        // Event listeners
+        startButton.addEventListener('click', startGame);
+        hintButton.addEventListener('click', showHint);
+        nextButton.addEventListener('click', nextQuestion);
+        restartButton.addEventListener('click', restartGame);
+
+        // Game functions
+        function startGame() {
+            startScreen.classList.add('hidden');
+            questionScreen.classList.remove('hidden');
+            currentQuestion = 0;
+            score = 0;
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            answerSelected = false;
+            questionCounter.textContent = `Question ${currentQuestion + 1} of ${questions.length}`;
+            scoreDisplay.textContent = score;
+            questionText.textContent = questions[currentQuestion].question;
+            
+            // Clear previous options
+            optionsContainer.innerHTML = '';
+            
+            // Add new options
+            questions[currentQuestion].options.forEach((option, index) => {
+                const button = document.createElement('button');
+                button.className = 'w-full text-left p-3 rounded-lg border hover:bg-blue-50 border-gray-200';
+                button.textContent = option;
+                button.addEventListener('click', () => selectAnswer(index));
+                optionsContainer.appendChild(button);
+            });
+            
+            // Reset UI elements
+            hintButton.classList.remove('hidden');
+            hintBox.classList.add('hidden');
+            answerFeedback.classList.add('hidden');
+            
+            // Update next button text
+            if (currentQuestion === questions.length - 1) {
+                nextButton.textContent = 'See Results';
+            } else {
+                nextButton.textContent = 'Next Question';
+            }
+        }
+
+        function selectAnswer(index) {
+            if (answerSelected) return;
+            
+            answerSelected = true;
+            const currentQ = questions[currentQuestion];
+            const isCorrect = index === currentQ.answer;
+            
+            // Update score
+            if (isCorrect) {
+                score++;
+                scoreDisplay.textContent = score;
+            }
+            
+            // Update option buttons
+            const optionButtons = optionsContainer.querySelectorAll('button');
+            
+            optionButtons.forEach((button, i) => {
+                if (i === index) {
+                    if (isCorrect) {
+                        button.className = 'w-full text-left p-3 rounded-lg border bg-green-100 border-green-500';
+                    } else {
+                        button.className = 'w-full text-left p-3 rounded-lg border bg-red-100 border-red-500';
+                    }
+                } else if (i === currentQ.answer) {
+                    button.className = 'w-full text-left p-3 rounded-lg border bg-green-100 border-green-500';
+                } else {
+                    button.className = 'w-full text-left p-3 rounded-lg border opacity-70 border-gray-200';
+                }
+            });
+            
+            // Show feedback
+            correctText.textContent = isCorrect ? 'Correct!' : 'Incorrect - the correct answer is: ' + currentQ.options[currentQ.answer];
+            factText.textContent = currentQ.hint;
+            answerFeedback.classList.remove('hidden');
+            hintButton.classList.add('hidden');
+        }
+
+        function showHint() {
+            hintText.textContent = questions[currentQuestion].hint;
+            hintBox.classList.remove('hidden');
+            hintButton.classList.add('hidden');
+        }
+
+        function nextQuestion() {
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                loadQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            questionScreen.classList.add('hidden');
+            resultsScreen.classList.remove('hidden');
+            
+            const percentage = Math.round((score / questions.length) * 100);
+            let message;
+            
+            if (percentage >= 90) {
+                message = "Outstanding! You're a true Pardee School expert!";
+            } else if (percentage >= 75) {
+                message = "Excellent! You know the Pardee School very well.";
+            } else if (percentage >= 60) {
+                message = "Good job! You have solid knowledge of the Pardee School.";
+            } else if (percentage >= 40) {
+                message = "Not bad! You've learned some Pardee School facts.";
+            } else {
+                message = "Thanks for playing! There's always more to learn about Pardee School.";
+            }
+            
+            finalScore.textContent = score;
+            scoreMessage.textContent = message;
+            percentageDisplay.textContent = `Your score: ${percentage}%`;
+        }
+
+        function restartGame() {
+            resultsScreen.classList.add('hidden');
+            startScreen.classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
