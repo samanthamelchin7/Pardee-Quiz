@@ -229,14 +229,6 @@
       <div class="card">
         <h2 id="question-text"></h2>
         <div id="options-container"></div>
-        
-        <!-- Hint -->
-        <div class="hint-container">
-          <button id="hint-button" class="secondary-button">Need a hint?</button>
-          <div id="hint-box" class="hint-box hidden">
-            <p id="hint-text"></p>
-          </div>
-        </div>
       </div>
       
       <!-- Answer Feedback -->
@@ -376,9 +368,6 @@
     const scoreDisplay = document.getElementById('score-display');
     const questionText = document.getElementById('question-text');
     const optionsContainer = document.getElementById('options-container');
-    const hintButton = document.getElementById('hint-button');
-    const hintBox = document.getElementById('hint-box');
-    const hintText = document.getElementById('hint-text');
     const answerFeedback = document.getElementById('answer-feedback');
     const correctText = document.getElementById('correct-text');
     const factText = document.getElementById('fact-text');
@@ -391,7 +380,6 @@
 
     // Event listeners
     startButton.addEventListener('click', startGame);
-    hintButton.addEventListener('click', showHint);
     nextButton.addEventListener('click', nextQuestion);
     restartButton.addEventListener('click', restartGame);
 
@@ -423,8 +411,6 @@
         });
         
         // Reset UI elements
-        hintButton.classList.remove('hidden');
-        hintBox.classList.add('hidden');
         answerFeedback.classList.add('hidden');
         
         // Update next button text
@@ -471,13 +457,10 @@
         correctText.textContent = isCorrect ? '✓ Correct!' : '✗ Incorrect - the correct answer is: ' + currentQ.options[currentQ.answer];
         factText.textContent = currentQ.hint;
         answerFeedback.classList.remove('hidden');
-        hintButton.classList.add('hidden');
     }
 
     function showHint() {
-        hintText.textContent = questions[currentQuestion].hint;
-        hintBox.classList.remove('hidden');
-        hintButton.classList.add('hidden');
+        // Function removed - no longer needed
     }
 
     function nextQuestion() {
@@ -529,67 +512,5 @@
         startScreen.classList.remove('hidden');
     }
   </script>
-</body>
-</html>
-                        button.className = 'w-full text-left p-3 rounded-lg border bg-red-100 border-red-500';
-                    }
-                } else if (i === currentQ.answer) {
-                    button.className = 'w-full text-left p-3 rounded-lg border bg-green-100 border-green-500';
-                } else {
-                    button.className = 'w-full text-left p-3 rounded-lg border opacity-70 border-gray-200';
-                }
-            });
-            
-            // Show feedback
-            correctText.textContent = isCorrect ? 'Correct!' : 'Incorrect - the correct answer is: ' + currentQ.options[currentQ.answer];
-            factText.textContent = currentQ.hint;
-            answerFeedback.classList.remove('hidden');
-            hintButton.classList.add('hidden');
-        }
-
-        function showHint() {
-            hintText.textContent = questions[currentQuestion].hint;
-            hintBox.classList.remove('hidden');
-            hintButton.classList.add('hidden');
-        }
-
-        function nextQuestion() {
-            if (currentQuestion < questions.length - 1) {
-                currentQuestion++;
-                loadQuestion();
-            } else {
-                showResults();
-            }
-        }
-
-        function showResults() {
-            questionScreen.classList.add('hidden');
-            resultsScreen.classList.remove('hidden');
-            
-            const percentage = Math.round((score / questions.length) * 100);
-            let message;
-            
-            if (percentage >= 90) {
-                message = "Outstanding! You're a true Pardee School expert!";
-            } else if (percentage >= 75) {
-                message = "Excellent! You know the Pardee School very well.";
-            } else if (percentage >= 60) {
-                message = "Good job! You have solid knowledge of the Pardee School.";
-            } else if (percentage >= 40) {
-                message = "Not bad! You've learned some Pardee School facts.";
-            } else {
-                message = "Thanks for playing! There's always more to learn about Pardee School.";
-            }
-            
-            finalScore.textContent = score;
-            scoreMessage.textContent = message;
-            percentageDisplay.textContent = `Your score: ${percentage}%`;
-        }
-
-        function restartGame() {
-            resultsScreen.classList.add('hidden');
-            startScreen.classList.remove('hidden');
-        }
-    </script>
 </body>
 </html>
