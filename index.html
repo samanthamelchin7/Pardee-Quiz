@@ -1,225 +1,124 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pardee School 10-Year Anniversary Trivia</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <style>
-        .fade-in {
-            animation: fadeIn 0.5s;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        .quiz-container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pardee Quiz</title>
+  <style>
+    /* Make the quiz container take up full viewport height */
+    .quiz-container {
+      min-height: 100vh;
+    }
+    
+    /* Hide any unnecessary GitHub Pages theme elements */
+    header.page-header,
+    footer.site-footer {
+      display: none !important;
+    }
+    
+    /* Ensure proper sizing on mobile */
+    @media (max-width: 768px) {
+      body {
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+      
+      .quiz-container {
+        padding: 10px !important;
+      }
+    }
+  </style>
 </head>
-<body class="bg-blue-50 min-h-screen">
-    <div class="quiz-container">
-        <div class="text-center mb-6">
-            <h1 class="text-3xl font-bold text-blue-800">From Foundation to Future</h1>
-            <p class="text-lg text-blue-600">Celebrating a Decade of Global Impact: The Pardee School's 10th Anniversary Gala</p>
-        </div>
-
-        <!-- Start Screen -->
-        <div id="start-screen" class="bg-white p-8 rounded-lg shadow-md text-center fade-in">
-            <h1 class="text-3xl font-bold text-blue-600 mb-4">Pardee School Trivia</h1>
-            <h2 class="text-xl text-blue-500 mb-4">Celebrating 10 Years of Global Excellence</h2>
-            
-            <p class="mb-6">Test your knowledge about the Frederick S. Pardee School of Global Studies with questions covering the school's impressive history, achievements, notable alumni, and exciting future vision!</p>
-            
-            <div class="bg-blue-50 p-4 rounded-md mb-6 text-left">
-                <p class="font-medium text-blue-700 mb-1">Did you know?</p>
-                <p class="text-sm">The Pardee School has over 11,000 alumni working in more than 100 countries, making a global impact in diplomacy, government, business, education, and nonprofits.</p>
-            </div>
-            
-            <button id="start-button" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors">
-                Start Quiz
-            </button>
-        </div>
-
-        <!-- Question Screen -->
-        <div id="question-screen" class="bg-white p-6 rounded-lg shadow-md fade-in hidden">
-            <div class="flex justify-between items-center mb-4">
-                <div>
-                    <span id="question-counter" class="text-sm text-gray-500">Question 1 of 10</span>
-                </div>
-                <div class="bg-blue-100 px-3 py-1 rounded-full text-blue-800 font-medium">
-                    Score: <span id="score-display">0</span>
-                </div>
-            </div>
-            
-            <h2 id="question-text" class="text-xl font-semibold mb-4"></h2>
-            
-            <div id="options-container" class="space-y-2 mb-6">
-                <!-- Options will be inserted here -->
-            </div>
-            
-            <button id="hint-button" class="text-blue-600 text-sm mb-4">
-                Need a hint?
-            </button>
-            
-            <div id="hint-box" class="bg-yellow-50 p-3 rounded-md mb-4 text-sm hidden">
-                <p><span class="font-medium">Hint:</span> <span id="hint-text"></span></p>
-            </div>
-            
-            <div id="answer-feedback" class="hidden">
-                <div class="mb-4">
-                    <p id="correct-text" class="text-sm font-medium text-gray-800 mb-1"></p>
-                    <div class="bg-blue-50 p-3 rounded-md text-sm">
-                        <p><span class="font-medium">Fun Fact:</span> <span id="fact-text"></span></p>
-                    </div>
-                </div>
-                <div class="flex justify-end">
-                    <button id="next-button" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
-                        Next Question
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Results Screen -->
-        <div id="results-screen" class="bg-white p-8 rounded-lg shadow-md text-center fade-in hidden">
-            <h2 class="text-2xl font-bold text-blue-600 mb-2">Quiz Complete!</h2>
-            
-            <div class="w-32 h-32 mx-auto my-6 flex items-center justify-center rounded-full border-8 border-blue-100">
-                <div>
-                    <p id="final-score" class="text-3xl font-bold text-blue-600">0</p>
-                    <p class="text-sm text-gray-500">of 10</p>
-                </div>
-            </div>
-            
-            <p id="score-message" class="text-xl mb-2 font-medium"></p>
-            <p id="percentage" class="mb-4">Your score: 0%</p>
-            
-            <div class="bg-blue-50 p-4 rounded-md mb-6 text-left">
-                <p class="font-medium text-blue-700 mb-1">From Foundation to Future</p>
-                <p class="text-sm">As we celebrate the 10th anniversary of the Pardee School's founding, we invite you to join us for a day of celebration with panel discussions and an evening gala commemorating 10 years of pioneering achievements in global studies.</p>
-            </div>
-            
-            <p class="text-sm text-gray-600 mb-6">
-                The Frederick S. Pardee School of Global Studies continues to grow and make an impact globally.
-                Here's to the next decade of excellence!
-            </p>
-            
-            <button id="restart-button" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700">
-                Play Again
-            </button>
-        </div>
-    </div>
-
+<body>
+  <div class="quiz-container">
     <script>
-        const questions = [
-            {
-                question: "In what year was the Frederick S. Pardee School of Global Studies officially established?",
-                options: ["2011", "2013", "2014", "2018"],
-                answer: 2,
-                hint: "Although the origins of the Pardee School go back four decades in the College of Arts & Sciences international relations department, the school was founded after a $25 million gift from Frederick S. Pardee in 2013."
-            },
-            {
-                question: "Which center, established in 1952, was the first to become part of what would later evolve into the Pardee School?",
-                options: ["Center for International Relations", "African Studies Center", "Center for the Study of Asia", "Latin American Studies Program"],
-                answer: 1,
-                hint: "The African Studies Center was established more than 60 years before the official founding of the Pardee School, making it the oldest international studies center at Boston University."
-            },
-            {
-                question: "Which Pardee School professor was portrayed by Nicole Kidman in the 1997 film 'The Peacemaker'?",
-                options: ["Jessica Stern", "Vivien Schmidt", "Susan Eckstein", "Rachel Brulé"],
-                answer: 0,
-                hint: "Jessica Stern's role at the National Security Council during the Clinton administration, where she directed Russian, Ukrainian, and Eurasian affairs and led a nuclear weapons smuggling response unit, was dramatized in 'The Peacemaker.'"
-            },
-           {
-  question: "Which Pardee alumna became the youngest woman ever elected to the United States Congress in 2018?",
-  options: ["Shoshana Chatfield", "Daniella Kolodny", "Alexandria Ocasio-Cortez", "Susan Rice"],
-  answer: 2,
-  hint: "Alexandria Ocasio-Cortez (Pardee '11) won New York's 14th Congressional District. Other notable Pardee alumni include Shoshana Chatfield, who served as president of the Naval War College, Christopher Paul O'Neill, who married into the Swedish royal family, and Adam Lupel, Vice President at the International Peace Institute."
-},
-            {
-                question: "What significant partnership with the US State Department did the Pardee School establish to support Afghan women's economic resilience?",
-                options: ["Afghan Educational Exchange Program", "Alliance for Afghan Women's Economic Resilience (AWER)", "Women's Global Development Initiative", "Central Asian Democracy Project"],
-                answer: 1,
-                hint: "In February 2024, at the AWER summit in Washington D.C., Secretary of State Antony Blinken praised the partnership with BU as 'a ray of light in some of the darkness.'"
-            },
-            {
-                question: "In 2023, Pardee School Dean Emeritus Adil Najam was named president of which global organization?",
-                options: ["World Bank", "World Wildlife Fund (WWF) International", "United Nations Environment Programme", "Organisation for Economic Co-operation and Development"],
-                answer: 1,
-                hint: "The World Wildlife Fund for Nature has nearly six million members and is working on conservation projects in nearly 100 countries, with an annual budget of almost $1 billion."
-            },
-            {
-                question: "What unique architectural feature will make the new Pardee School building unique in Massachusetts when completed?",
-                options: [
-                    "It will be the tallest timber building in the state",
-                    "It will have the largest solar array on any university building",
-                    "It will feature a rooftop diplomatic conference center",
-                    "It will include an underground research facility"
-                ],
-                answer: 0,
-                hint: "The 12-story mass timber structure will be the tallest timber building in Massachusetts, making it a significant addition to BU's Charles River Campus and a symbol of sustainability."
-            },
-            {
-                question: "In 2025, the Pardee School launched what new publication?",
-                options: [
-                    "A satellite campus in Geneva",
-                    "The inaugural Pardee Magazine",
-                    "A doctoral program in Global Studies",
-                    "An annual global policy conference"
-                ],
-                answer: 1,
-                hint: "The inaugural issue of Pardee Magazine featured articles on the next generation of global leaders, notable alumni, faculty perspectives on global challenges for the new US administration, and coverage of the summit for Afghan women in Washington."
-            },
-          {
-  question: "In 2024, the Pardee School established partnerships with which TWO prestigious institutions?",
-  options: [
-    "Oxford University and Sciences Po Paris",
-    "Beaconhouse National University (Pakistan) and Royal United Services Institute (UK)",
-    "Tokyo University and Peking University",
-    "German Marshall Fund and Center for European Policy Studies"
-  ],
-  answer: 1,
-  hint: "These partnerships connect Pardee with Beaconhouse in Lahore (whose President/Vice Chancellor Moeed W. Yusuf is a Pardee alumnus) and RUSI in London, a prestigious organization with scholars and policy experts in international affairs and security."
-}
-                answer: 2,
-                hint: "This partnership with BNU in Lahore was especially meaningful as the university's President/Vice Chancellor, Moeed W. Yusuf, is a Pardee School alumnus who called the collaboration 'a remarkable opportunity' for students, faculty, and researchers to engage globally."
-            },
-            {
-                question: "In 2025, the Pardee School formalized a partnership with which organization founded by former Dominican Republic President Leonel Fernández?",
-                options: [
-                    "Centro de Estudios Caribeños",
-                    "Instituto Dominicano de Política Exterior",
-                    "Global Foundation for Democracy and Development (FUNGLODE)",
-                    "Caribbean Research Institute"
-                ],
-                answer: 2,
-                hint: "For FUNGLODE, this agreement represents 'a landmark step in our commitment to academic excellence, research, and the development of global thought' that will strengthen knowledge exchange and create collaborative opportunities for the Dominican Republic and the region."
-            }
-        ];
+      const quizQuestions = [
+        {
+          question: "In what year was the Frederick S. Pardee School of Global Studies officially established?",
+          options: ["2011", "2013", "2014", "2018"],
+          answer: 2,
+          hint: "Although the origins of the Pardee School go back four decades in the College of Arts & Sciences international relations department, the school was founded after a $25 million gift from Frederick S. Pardee in 2013."
+        },
+        {
+          question: "Which center, established in 1952, was the first to become part of what would later evolve into the Pardee School?",
+          options: ["Center for International Relations", "African Studies Center", "Center for the Study of Asia", "Latin American Studies Program"],
+          answer: 1,
+          hint: "The African Studies Center was established more than 60 years before the official founding of the Pardee School, making it the oldest international studies center at Boston University."
+        },
+        {
+          question: "Which Pardee School professor was portrayed by Nicole Kidman in the 1997 film 'The Peacemaker'?",
+          options: ["Jessica Stern", "Vivien Schmidt", "Susan Eckstein", "Rachel Brulé"],
+          answer: 0,
+          hint: "Jessica Stern's role at the National Security Council during the Clinton administration, where she directed Russian, Ukrainian, and Eurasian affairs and led a nuclear weapons smuggling response unit, was dramatized in 'The Peacemaker.'"
+        },
+        {
+          question: "Which Pardee alumna became the youngest woman ever elected to the United States Congress in 2018?",
+          options: ["Shoshana Chatfield", "Daniella Kolodny", "Alexandria Ocasio-Cortez", "Susan Rice"],
+          answer: 2,
+          hint: "Alexandria Ocasio-Cortez (Pardee '11) won New York's 14th Congressional District. Other notable Pardee alumni include Shoshana Chatfield, who served as president of the Naval War College, Christopher Paul O'Neill, who married into the Swedish royal family, and Adam Lupel, Vice President at the International Peace Institute."
+        },
+        {
+          question: "What significant partnership with the US State Department did the Pardee School establish to support Afghan women's economic resilience?",
+          options: ["Afghan Educational Exchange Program", "Alliance for Afghan Women's Economic Resilience (AWER)", "Women's Global Development Initiative", "Central Asian Democracy Project"],
+          answer: 1,
+          hint: "In February 2024, at the AWER summit in Washington D.C., Secretary of State Antony Blinken praised the partnership with BU as 'a ray of light in some of the darkness.'"
+        },
+        {
+          question: "In 2023, Pardee School Dean Emeritus Adil Najam was named president of which global organization?",
+          options: ["World Bank", "World Wildlife Fund (WWF) International", "United Nations Environment Programme", "Organisation for Economic Co-operation and Development"],
+          answer: 1,
+          hint: "The World Wildlife Fund for Nature has nearly six million members and is working on conservation projects in nearly 100 countries, with an annual budget of almost $1 billion."
+        },
+        {
+          question: "What unique architectural feature will make the new Pardee School building unique in Massachusetts when completed?",
+          options: [
+            "It will be the tallest timber building in the state",
+            "It will have the largest solar array on any university building",
+            "It will feature a rooftop diplomatic conference center",
+            "It will include an underground research facility"
+          ],
+          answer: 0,
+          hint: "The 12-story mass timber structure will be the tallest timber building in Massachusetts, making it a significant addition to BU's Charles River Campus and a symbol of sustainability."
+        },
+        {
+          question: "In 2025, the Pardee School launched what new publication?",
+          options: [
+            "A satellite campus in Geneva",
+            "The inaugural Pardee Magazine",
+            "A doctoral program in Global Studies",
+            "An annual global policy conference"
+          ],
+          answer: 1,
+          hint: "The inaugural issue of Pardee Magazine featured articles on the next generation of global leaders, notable alumni, faculty perspectives on global challenges for the new US administration, and coverage of the summit for Afghan women in Washington."
+        },
+        {
+          question: "In 2024, the Pardee School established partnerships with which TWO prestigious institutions?",
+          options: [
+            "Oxford University and Sciences Po Paris",
+            "Beaconhouse National University (Pakistan) and Royal United Services Institute (UK)",
+            "Tokyo University and Peking University",
+            "German Marshall Fund and Center for European Policy Studies"
+          ],
+          answer: 1,
+          hint: "These partnerships connect Pardee with Beaconhouse in Lahore (whose President/Vice Chancellor Moeed W. Yusuf is a Pardee alumnus) and RUSI in London, a prestigious organization with scholars and policy experts in international affairs and security."
+        },
+        {
+          question: "In 2025, the Pardee School formalized a partnership with which organization founded by former Dominican Republic President Leonel Fernández?",
+          options: [
+            "Centro de Estudios Caribeños",
+            "Instituto Dominicano de Política Exterior",
+            "Global Foundation for Democracy and Development (FUNGLODE)",
+            "Caribbean Research Institute"
+          ],
+          answer: 2,
+          hint: "For FUNGLODE, this agreement represents 'a landmark step in our commitment to academic excellence, research, and the development of global thought.' The partnership was marked by a master agreement signing ceremony featuring Dr. Leonel Fernández and BU Provost Dr. Gloria Waters."
+        }
+      ];
+    </script>
+  </div>
+</body>
+</html>
 
-        // Game state
-        let currentQuestion = 0;
-        let score = 0;
-        let answerSelected = false;
-
-        // DOM elements
-        const startScreen = document.getElementById('start-screen');
-        const questionScreen = document.getElementById('question-screen');
-        const resultsScreen = document.getElementById('results-screen');
-        const startButton = document.getElementById('start-button');
-        const questionCounter = document.getElementById('question-counter');
-        const scoreDisplay = document.getElementById('score-display');
-        const questionText = document.getElementById('question-text');
-        const optionsContainer = document.getElementById('options-container');
-        const hintButton = document.getElementById('hint-button');
-        const hintBox = document.getElementById('hint-box');
-        const hintText = document.getElementById('hint-text');
-        const answerFeedback = document.getElementById('answer-feedback');
-        const correctText = document.getElementById('correct-text');
         const factText = document.getElementById('fact-text');
         const nextButton = document.getElementById('next-button');
         const finalScore = document.getElementById('final-score');
